@@ -1,5 +1,5 @@
 FROM python:3
 WORKDIR /usr/src/app
 COPY . .
-CMD ["profit_loss.py",]
+CMD ["d1.py",]
 ENTRYPOINT ["python3"]
