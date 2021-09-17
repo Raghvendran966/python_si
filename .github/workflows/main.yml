@@ -1,13 +1,16 @@
-name: CI to Docker Hub
+name: ci
+
 on:
   push:
-    branches: [ main ]
-  jobs:
-    build:
+    branches:
+      - 'master'
+
+jobs:
+  docker:
     runs-on: ubuntu-latest
- steps:
+    steps:
     
-      - name: Check Out Repo 
+- name: Check Out Repo 
         uses: actions/checkout@v2
 
       - name: Login to Docker Hub
