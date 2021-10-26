@@ -19,7 +19,9 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "dockerhub", url: "" ]){
                     sh  'docker push raghvendran966/sampleapp:latest'
-                    sh  'docker push raghvendran966/sampleapp:$BUILD_NUMBER' 
+                    sh  'docker push raghvendran966/sampleapp:$BUILD_NUMBER'
+                    sh 'docker push localhost:5000/react-app'
+                    sh 'docker rmi -f react-app localhost:5000/react-app'
                 }
             }
         }
