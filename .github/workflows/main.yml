@@ -11,7 +11,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-     Deploy:
+ Deploy:
     needs: build
     runs-on: ubuntu-latest
     
@@ -21,7 +21,7 @@ jobs:
         env:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
-             run: |
+            run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
