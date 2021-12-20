@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ./deploy.key
+          sudo chmod 600 ./deploy.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.AWS_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.HOSTNAME}}
+
+      - name: Commit Build
+        run: |
+          git config --local user.email "bot@desobi.org"
+          git config --local user.name "github-actions[bot]"
+          git add . --force
+          git commit -m "Build" -a
+
+      - name: Push Build
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: production-build
+          force: true
+          
